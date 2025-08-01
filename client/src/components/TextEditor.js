@@ -15,10 +15,13 @@ export default function TextEditor() {
 
   // ✅ Connect to backend using env URL
   useEffect(() => {
-    const s = io(BACKEND_URL);
-    setSocket(s);
-    return () => s.disconnect();
-  }, []);
+  const s = io(BACKEND_URL, {
+    transports: ["websocket"],
+  });
+  setSocket(s);
+  return () => s.disconnect();
+}, []);
+
 
   useEffect(() => {
     if (!socket || !quill) return;
