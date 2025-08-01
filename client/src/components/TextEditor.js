@@ -4,6 +4,8 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { io } from "socket.io-client";
 
+// ✅ Use environment variable from .env file
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const SAVE_INTERVAL_MS = 2000;
 
 export default function TextEditor() {
@@ -11,14 +13,16 @@ export default function TextEditor() {
   const [socket, setSocket] = useState();
   const [quill, setQuill] = useState();
 
+  // ✅ Connect to backend using env URL
   useEffect(() => {
-    const s = io("http://localhost:5000"); // backend URL
+    const s = io(BACKEND_URL);
     setSocket(s);
     return () => s.disconnect();
   }, []);
 
   useEffect(() => {
     if (!socket || !quill) return;
+
     socket.once("load-document", (document) => {
       quill.setContents(document);
       quill.enable();
