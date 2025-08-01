@@ -4,36 +4,38 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { io } from "socket.io-client";
 
-// ✅ Use environment variable from .env file
+// ✅ Use environment variable for backend URL
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const SAVE_INTERVAL_MS = 2000;
 
-export default function TextEditor() {
+export default function TextEditor({ user }) {
   const { id: documentId } = useParams();
   const [socket, setSocket] = useState();
   const [quill, setQuill] = useState();
 
-  // ✅ Connect to backend using env URL
+  // ✅ Connect to backend
   useEffect(() => {
-  const s = io(BACKEND_URL, {
-    transports: ["websocket"],
-  });
-  setSocket(s);
-  return () => s.disconnect();
-}, []);
+    const s = io(BACKEND_URL, {
+      transports: ["websocket"],
+    });
+    setSocket(s);
+    return () => s.disconnect();
+  }, []);
 
-
+  // ✅ Load document from backend
   useEffect(() => {
-    if (!socket || !quill) return;
+    if (!socket || !quill || !user) return;
 
     socket.once("load-document", (document) => {
       quill.setContents(document);
       quill.enable();
     });
 
-    socket.emit("get-document", documentId);
-  }, [socket, quill, documentId]);
+    console.log("📤 Sending document request:", documentId, user?.uid);
+    socket.emit("get-document", documentId, user.uid); // 👈 Send user.uid
+  }, [socket, quill, documentId, user]);
 
+  // ✅ Save document every 2 seconds
   useEffect(() => {
     if (!socket || !quill) return;
 
@@ -44,17 +46,19 @@ export default function TextEditor() {
     return () => clearInterval(interval);
   }, [socket, quill]);
 
+  // ✅ Receive remote changes
   useEffect(() => {
     if (!socket || !quill) return;
 
     const handler = (delta) => {
       quill.updateContents(delta);
     };
-    socket.on("receive-changes", handler);
 
+    socket.on("receive-changes", handler);
     return () => socket.off("receive-changes", handler);
   }, [socket, quill]);
 
+  // ✅ Send local changes
   useEffect(() => {
     if (!socket || !quill) return;
 
@@ -64,10 +68,10 @@ export default function TextEditor() {
     };
 
     quill.on("text-change", handler);
-
     return () => quill.off("text-change", handler);
   }, [socket, quill]);
 
+  // ✅ Set up editor on mount
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper == null) return;
     wrapper.innerHTML = "";
@@ -79,5 +83,23 @@ export default function TextEditor() {
     setQuill(q);
   }, []);
 
-  return <div className="container" ref={wrapperRef}></div>;
+  return (
+    <>
+      <a
+        href="/my-docs"
+        style={{
+          display: "block",
+          textAlign: "center",
+          padding: "1rem",
+          textDecoration: "none",
+          color: "purple",
+          fontWeight: "bold"
+        }}
+      >
+        📄 View My Documents
+      </a>
+
+      <div className="container" ref={wrapperRef}></div>
+    </>
+  );
 }
