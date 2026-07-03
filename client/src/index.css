@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* Main Variables & Settings */
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Quill Editor custom layout styles */
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 10px 16px !important;
+  background-color: #f8fafc;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dark .ql-toolbar.ql-snow {
+  background-color: #0f172a;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+.dark .ql-toolbar .ql-stroke {
+  stroke: #94a3b8 !important;
+}
+
+.dark .ql-toolbar .ql-fill {
+  fill: #94a3b8 !important;
+}
+
+.dark .ql-toolbar .ql-picker {
+  color: #94a3b8 !important;
+}
+
+.dark .ql-toolbar .ql-picker-options {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+.dark .ql-toolbar .ql-picker-item {
+  color: #94a3b8 !important;
+}
+
+.dark .ql-toolbar .ql-picker-item:hover,
+.dark .ql-toolbar .ql-picker-item.ql-selected {
+  color: #f8fafc !important;
+  background-color: #334155 !important;
+}
+
+.ql-container.ql-snow {
+  border: none !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  flex: 1;
+}
+
+/* Custom Quill selection cursors layout */
+.ql-cursor {
+  position: absolute;
+  width: 2px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.ql-cursor-flag {
+  position: absolute;
+  top: -24px;
+  left: -2px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px 4px 4px 0;
+  color: white;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.2s ease;
+}
+
+.ql-cursor-caret {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glassmorphism utility classes */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(4px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Modern grid glow effect */
+.grid-glow {
+  position: relative;
+}
+.grid-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(400px circle at var(--x, 0) var(--y, 0), rgba(59, 130, 246, 0.08), transparent 80%);
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.grid-glow:hover::before {
+  opacity: 1;
+}

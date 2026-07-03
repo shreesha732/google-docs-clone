@@ -1,0 +1,16 @@
+{
+  "name": "google-docs-clone",
+  "version": "1.0.0",
+  "description": "Collaborative text editor clone of Google Docs using React, Tailwind CSS v4, Express, Socket.io, Clerk, and MongoDB Atlas.",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "start": "npm start --prefix server",
+    "build": "npm run build --prefix client",
+    "start:server": "npm start --prefix server",
+    "build:client": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

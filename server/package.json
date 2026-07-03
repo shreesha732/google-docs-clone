@@ -1,0 +1,27 @@
+{
+  "name": "google-docs-clone-server",
+  "version": "1.0.0",
+  "description": "Backend API and Socket.io server for collaborative document platform",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "@clerk/backend": "^1.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "google-docs-clone": "file:..",
+    "helmet": "^7.1.0",
+    "mongoose": "^8.3.1",
+    "nanoid": "^5.0.7",
+    "socket.io": "^4.7.5",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
