@@ -1,5 +1,8 @@
 # DocStudio — Production-Ready Collaborative Document Platform
 
+![Live Demo](https://img.shields.io/badge/Live_Demo-Available_Now-success?style=for-the-badge&logo=render)
+**Check it out live:** [https://google-docs-clone-7mcu.onrender.com](https://google-docs-clone-7mcu.onrender.com)
+
 A full-stack, recruiter-impressive collaborative document studio similar to Google Docs. Designed with modern web technologies, robust security middlewares, real-time WebSockets synchronization, stateful presence indicators, and complete version snapshot history.
 
 ---
@@ -161,21 +164,14 @@ All endpoints (except `GET /api/documents/:id` when the document is marked publi
 
 ## 🚢 Production Deployment
 
-### Frontend (Vercel)
-1. Set up a new project on Vercel importing the `/client` directory.
-2. In Environment Variables, configure:
-   - `VITE_CLERK_PUBLISHABLE_KEY`: (Your Clerk Publishable Key)
-   - `VITE_API_URL`: (Your Render server URL, e.g. `https://api.yourdomain.com`)
-3. Deploy!
+This project is configured for a **Monolithic Deployment** on Render.com (or Heroku), meaning a single Node.js Express server hosts both the API and the compiled React frontend files statically.
 
-### Backend (Render)
-1. Create a new Web Service on Render, linking your Git repository.
-2. Set Build Command: `npm install`
+### Quick Deployment on Render.com
+1. Create a new **Web Service** on Render, linking your Git repository.
+2. Set Build Command: `npm run install:all && npm run build`
 3. Set Start Command: `npm start`
-4. Set the Root Directory to `server`.
-5. In Environment Variables, configure:
+4. Leave Root Directory blank.
+5. In Environment Variables (Optional, for full functionality), configure:
    - `MONGODB_URI`: (Your MongoDB Atlas connection URI)
    - `CLERK_SECRET_KEY`: (Your Clerk Secret Key)
-   - `CORS_ORIGIN`: (Your Vercel site URL, e.g. `https://your-app.vercel.app`)
-   - `NODE_ENV`: `production`
-6. Deploy!
+6. Select the **Free** instance type and Deploy!
